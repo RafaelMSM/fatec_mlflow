@@ -40,3 +40,37 @@ X_train, X_test, y_train, y_test = model_selection.train_test_split( df[features
 print("Geral:", df[target].mean())
 print("Treino:", y_train.mean())
 print("Teste:", y_test.mean())
+
+# COMMAND ----------
+
+with mlflow.start_run():
+    
+    mlflow.sklearn.autolog()
+    
+    model =  ensemble.RandomForestClassifier(min_samples_leaf=64)
+
+    model.fit(X_train, y_train)
+
+    y_train_pred = model.predict(X_train)
+
+    acc_train = metrics.accuracy_score(y_train, y_train_pred)
+    print("Acuracia:", acc_train)
+
+    y_test_pred = model.predict(X_test)
+
+    acc_test = metrics.accuracy_score(y_test, y_test_pred)
+    print("Acuracia:", acc_test)
+
+# COMMAND ----------
+
+y_train_pred = model.predict(X_train)
+
+acc_train = metrics.accuracy_score(y_train, y_train_pred)
+print("Acuracia:", acc_train)
+
+# COMMAND ----------
+
+y_test_pred = model.predict(X_test)
+
+acc_test = metrics.accuracy_score(y_test, y_test_pred)
+print("Acuracia:", acc_test)
